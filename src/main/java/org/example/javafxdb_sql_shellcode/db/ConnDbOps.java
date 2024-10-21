@@ -44,8 +44,8 @@ public class ConnDbOps {
                     + "id INT( 10 ) NOT NULL PRIMARY KEY AUTO_INCREMENT,"
                     + "f_name VARCHAR(200) NOT NULL,"
                     + "l_name VARCHAR(200) NOT NULL,"
-                    + "major VARCHAR(200) NOT NULL UNIQUE,"
-                    + "dept VARCHAR(200),"
+                    + "major VARCHAR(200),"
+                    + "dept VARCHAR(200)," //Should this and major be NOT NULL? Unknown yet
                     + ")";
             statement.executeUpdate(sql);
 
