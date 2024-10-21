@@ -16,10 +16,10 @@ import java.sql.Statement;
  * @author MoaathAlrajab
  */
 public class ConnDbOps {
-    final String MYSQL_SERVER_URL = "jdbc:mysql://localhost/";
-    final String DB_URL = "jdbc:mysql://localhost/DBname";
-    final String USERNAME = "admin";
-    final String PASSWORD = "password";
+    final String MYSQL_SERVER_URL = "jdbc:mysql://csc311saracogluserver.mysql.database.azure.com/";
+    final String DB_URL = "jdbc:mysql://csc311saracogluserver.mysql.database.azure.com/DBname";
+    final String USERNAME = "selins";
+    final String PASSWORD = "Rock1994";
     
     public  boolean connectToDatabase() {
         boolean hasRegistredUsers = false;
@@ -37,13 +37,15 @@ public class ConnDbOps {
             //Second, connect to the database and create the table "users" if cot created
             conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
             statement = conn.createStatement();
+            String sql1 = "DROP TABLE IF EXISTS users";
+            statement.executeUpdate(sql1);
+
             String sql = "CREATE TABLE IF NOT EXISTS users ("
                     + "id INT( 10 ) NOT NULL PRIMARY KEY AUTO_INCREMENT,"
-                    + "name VARCHAR(200) NOT NULL,"
-                    + "email VARCHAR(200) NOT NULL UNIQUE,"
-                    + "phone VARCHAR(200),"
-                    + "address VARCHAR(200),"
-                    + "password VARCHAR(200) NOT NULL"
+                    + "f_name VARCHAR(200) NOT NULL,"
+                    + "l_name VARCHAR(200) NOT NULL,"
+                    + "major VARCHAR(200) NOT NULL UNIQUE,"
+                    + "dept VARCHAR(200),"
                     + ")";
             statement.executeUpdate(sql);
 
