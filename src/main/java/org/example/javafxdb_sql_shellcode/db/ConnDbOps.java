@@ -37,16 +37,17 @@ public class ConnDbOps {
             //Second, connect to the database and create the table "users" if cot created
             conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
             statement = conn.createStatement();
-            String sql1 = "DROP TABLE IF EXISTS users";
-            statement.executeUpdate(sql1);
+//            String sql1 = "DROP TABLE IF EXISTS users";
+//            statement.executeUpdate(sql1);
 
             String sql = "CREATE TABLE IF NOT EXISTS users ("
                     + "id INT( 10 ) NOT NULL PRIMARY KEY AUTO_INCREMENT,"
-                    + "f_name VARCHAR(200) NOT NULL,"
-                    + "l_name VARCHAR(200) NOT NULL,"
+                    + "firstName VARCHAR(200) NOT NULL,"
+                    + "lastName VARCHAR(200) NOT NULL,"
                     + "major VARCHAR(200),"
-                    + "dept VARCHAR(200)," //Should this and major be NOT NULL? Unknown yet
+                    + "dept VARCHAR(200)"
                     + ")";
+
             statement.executeUpdate(sql);
 
             //check if we have users in the table users
@@ -70,23 +71,23 @@ public class ConnDbOps {
         return hasRegistredUsers;
     }
 
-    public  void queryUserByName(String name) {
+    public  void queryUserByName(String firstName, String lastName) {
 
-
+        //Need to turn this to query by first and last name
         try {
             Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-            String sql = "SELECT * FROM users WHERE name = ?";
+            String sql = "SELECT * FROM users WHERE firstName = ? AND lastName = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, name);
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                String email = resultSet.getString("email");
-                String phone = resultSet.getString("phone");
-                String address = resultSet.getString("address");
-                System.out.println("ID: " + id + ", Name: " + name + ", Email: " + email + ", Phone: " + phone + ", Address: " + address);
+                String major = resultSet.getString("major");
+                String dept = resultSet.getString("dept");
+                System.out.println("ID: " + id + ", Major: " + major + ", Dept: " + dept);
             }
 
             preparedStatement.close();
@@ -109,11 +110,11 @@ public class ConnDbOps {
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                String email = resultSet.getString("email");
-                String phone = resultSet.getString("phone");
-                String address = resultSet.getString("address");
-                System.out.println("ID: " + id + ", Name: " + name + ", Email: " + email + ", Phone: " + phone + ", Address: " + address);
+                String firstName = resultSet.getString("firstName");
+                String lastName = resultSet.getString("lastName");
+                String major = resultSet.getString("major");
+                String dept = resultSet.getString("dept");
+                System.out.println("ID: " + id + ", Name: " + firstName + " " + lastName + ", Major: " + major + ", Dept: " + dept);
             }
 
             preparedStatement.close();
@@ -123,18 +124,15 @@ public class ConnDbOps {
         }
     }
 
-    public  void insertUser(String name, String email, String phone, String address, String password) {
-
-
+    public  void insertUser(String firstName, String lastName, String major, String dept) {
         try {
             Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-            String sql = "INSERT INTO users (name, email, phone, address, password) VALUES (?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO users (firstName, lastName, dept, major) VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql);
-            preparedStatement.setString(1, name);
-            preparedStatement.setString(2, email);
-            preparedStatement.setString(3, phone);
-            preparedStatement.setString(4, address);
-            preparedStatement.setString(5, password);
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setString(3, major);
+            preparedStatement.setString(4, dept);
 
             int row = preparedStatement.executeUpdate();
 
