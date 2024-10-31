@@ -98,9 +98,6 @@ public class ConnDbOps {
     }
 
     public  void listAllUsers() {
-
-
-
         try {
             Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
             String sql = "SELECT * FROM users ";
@@ -147,5 +144,61 @@ public class ConnDbOps {
         }
     }
 
-    
+    //Use query by name to find user and confirm with all string values before deleting them
+    public  void deleteUser(int id) {
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+            String sql = "DELETE FROM users WHERE id = ?";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+            // Insert the id to be deleted in to the prepared statement
+            preparedStatement.setInt(1, id);
+
+            // Execute the delete
+            int row = preparedStatement.executeUpdate();
+
+            if (row > 0) {
+                System.out.println("User was deleted successfully.");
+            } else {
+                System.out.println("No user found with the given ID.");
+            }
+
+            preparedStatement.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+        //Can query by user id? its accessible in GUI and in display all users method
+    public  void editUser(int id, String firstName, String lastName, String major, String dept) {
+        try {
+            Connection conn = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
+            String sql = "UPDATE users SET firstName = ?, lastName = ?, major = ?, dept = ? WHERE id = ?";
+//            String sql = "INSERT INTO users (firstName, lastName, dept, major) VALUES (?, ?, ?, ?)";
+            PreparedStatement preparedStatement = conn.prepareStatement(sql);
+
+            // Set parameters for the prepared statement
+            preparedStatement.setString(1, firstName);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setString(3, major);
+            preparedStatement.setString(4, dept);
+            preparedStatement.setInt(5, id);
+
+            // Execute the update
+            int row = preparedStatement.executeUpdate();
+
+            if (row > 0) {
+                System.out.println("User was updated successfully.");
+            } else {
+                System.out.println("No user found with the given ID.");
+            }
+
+            preparedStatement.close();
+            conn.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

@@ -11,30 +11,48 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.input.KeyCodeCombination?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="807.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafxdb_sql_shellcode.DB_GUI_Controller">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="535.0" prefWidth="807.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.javafxdb_sql_shellcode.DB_GUI_Controller">
    <children>
       <BorderPane layoutX="-2.0" layoutY="-1.0" prefHeight="535.0" prefWidth="807.0">
          <top>
-            <MenuBar BorderPane.alignment="CENTER">
+            <MenuBar styleClass="bottom_pane" BorderPane.alignment="CENTER">
               <menus>
-                <Menu mnemonicParsing="false" text="File">
+                <Menu fx:id="fileMenu" mnemonicParsing="false" onAction="#openFileMenu" text="File">
                   <items>
-                    <MenuItem mnemonicParsing="false" onAction="#closeApplication" text="Close" />
+                    <MenuItem mnemonicParsing="false" onAction="#closeApplication" text="Close">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="W" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
                   </items>
+                     <accelerator>
+                        <KeyCodeCombination alt="UP" code="F" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                     </accelerator>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
+                        <MenuItem fx:id="editMenuItem" mnemonicParsing="false" onAction="#editRecord" text="Edit">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="E" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                    <MenuItem fx:id="deleteMenuItem" mnemonicParsing="false" onAction="#deleteRecord" text="Delete">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="D" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="NewMenuItem">
+                <Menu mnemonicParsing="false" text="Theme">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="About" />
+                    <MenuItem fx:id="lightModeMenuItem" mnemonicParsing="false" onAction="#switchLightMode" text="Light Mode" />
+                        <MenuItem fx:id="darkModeMenuItem" mnemonicParsing="false" onAction="#switchDarkMode" text="Dark Mode" />
                   </items>
                 </Menu>
                   <Menu mnemonicParsing="false" text="Settings">
@@ -44,14 +62,18 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="Help">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="About" />
+                        <MenuItem fx:id="aboutMenuItem" mnemonicParsing="false" onAction="#openDocs" text="About">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="A" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
                      </items>
                   </Menu>
               </menus>
             </MenuBar>
          </top>
          <right>
-            <TableView fx:id="tv" onMouseClicked="#selectedItemTV" prefHeight="501.0" prefWidth="507.0" BorderPane.alignment="CENTER">
+            <TableView fx:id="tv" onMouseClicked="#selectedItemTV" prefHeight="501.0" prefWidth="507.0" styleClass="bottom_pane" stylesheets="@style.css" BorderPane.alignment="CENTER">
               <columns>
                 <TableColumn fx:id="tv_id" prefWidth="32.0" text="ID" />
                 <TableColumn fx:id="tv_fn" prefWidth="87.0" text="First Name" />
@@ -73,10 +95,14 @@
                            </image></ImageView>
                      </children>
                   </AnchorPane>
-               </children></VBox>
+               </children>
+               <stylesheets>
+                  <URL value="@style.css" />
+                  <URL value="@dark-style.css" />
+               </stylesheets></VBox>
          </left>
          <center>
-            <VBox prefHeight="476.0" prefWidth="233.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="476.0" prefWidth="233.0" styleClass="bottom_pane" BorderPane.alignment="CENTER">
                <children>
                   <TextField fx:id="first_name" promptText="First Name">
                      <VBox.margin>
@@ -118,12 +144,12 @@
             </VBox>
          </center>
          <bottom>
-            <HBox prefHeight="32.0" prefWidth="693.0" styleClass="bottom_pane" BorderPane.alignment="CENTER" />
+            <HBox prefHeight="32.0" prefWidth="693.0" styleClass="bottom_pane" stylesheets="@style.css" BorderPane.alignment="CENTER" />
          </bottom>
       </BorderPane>
    </children>
    <stylesheets>
       <URL value="@style.css" />
-      <URL value="@../../../../../styling/style.css" />
+      <URL value="@dark-style.css" />
    </stylesheets>
 </AnchorPane>

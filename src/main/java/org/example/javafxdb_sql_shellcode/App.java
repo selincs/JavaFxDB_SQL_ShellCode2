@@ -8,7 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Scanner;
-import javafx.scene.paint.Color;
+
 import javafx.util.Duration;
 import org.example.javafxdb_sql_shellcode.db.ConnDbOps;
 
@@ -67,7 +67,7 @@ public class App extends Application {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("splash_screen.fxml"));
             Scene scene = new Scene(root, 850, 560);
-            scene.getStylesheets().add("style.css");
+            scene.getStylesheets().add(getClass().getResource("/org/example/javafxdb_sql_shellcode/style.css").toExternalForm());
             primaryStage.setScene(scene);
             primaryStage.show();
             changeScene();
@@ -90,6 +90,8 @@ public class App extends Application {
             System.out.println("| To display all users,   press 'a' |");
             System.out.println("| To insert to the DB,    press 'i' |");
             System.out.println("| To query by name,       press 'q' |");
+            System.out.println("| To update by ID,        press 'u' |");
+            System.out.println("| To delete by ID,        press 'd' |");
             System.out.println("| To exit,                press 'e' |");
             System.out.println("===================================");
             System.out.print("Enter your choice: ");
@@ -121,10 +123,28 @@ public class App extends Application {
                 case 'q':
                     System.out.print("Enter the first name to query: ");
                     String queryFirstName = scan.next();
-
                     System.out.print("Enter the last name to query: ");
                     String queryLastName = scan.next();
                     cdbop.queryUserByName(queryFirstName, queryLastName); //Your queryUserByName method
+                    break;
+
+                case 'u':
+                    System.out.print("Enter the ID of the entry to update: ");
+                    String updateID = scan.next();
+                    System.out.print("Enter First Name: ");
+                    firstName = scan.next();
+                    System.out.print("Enter Last Name: ");
+                    lastName = scan.next();
+                    System.out.print("Enter Major: ");
+                    major = scan.next();
+                    System.out.print("Enter Dept: ");
+                    department = scan.next();
+                    cdbop.editUser(Integer.parseInt(updateID), firstName, lastName, major, department);
+                    break;
+                case 'd' :
+                    System.out.print("Enter the ID of the entry to delete: ");
+                    String deleteID = scan.next();
+                    cdbop.deleteUser(Integer.parseInt(deleteID));
                     break;
                 case 'e':
                     System.out.println("Exiting...");

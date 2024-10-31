@@ -1,8 +1,7 @@
 package org.example.javafxdb_sql_shellcode.db;
 
 public class Person {
-
-
+    //Needs a ImgView attribute for profile picture. How to save in db? -> As a string url?
     private Integer id;
     private String firstName;
     private String lastName;

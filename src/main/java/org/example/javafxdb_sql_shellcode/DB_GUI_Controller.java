@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -11,16 +12,54 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javafx.stage.Stage;
 import org.example.javafxdb_sql_shellcode.db.Person;
+import org.example.javafxdb_sql_shellcode.App;
 
 
 public class DB_GUI_Controller implements Initializable {
+
+    @FXML
+    private MenuItem aboutMenuItem;
+
+    @FXML
+    private Button addBtn;
+
+    @FXML
+    private MenuItem darkModeMenuItem;
+
+    @FXML
+    private MenuItem deleteMenuItem;
+
+    @FXML
+    private MenuItem editMenuItem;
+
+    @FXML
+    private Menu fileMenu;
+
+    @FXML
+    private MenuItem lightModeMenuItem;
+
+    @FXML
+    private AnchorPane anchorPane;
 
     private final ObservableList<Person> data =
             FXCollections.observableArrayList(
@@ -55,6 +94,31 @@ public class DB_GUI_Controller implements Initializable {
         tv.setItems(data);
     }
 
+    @FXML
+    void openDocs(ActionEvent event) {
+
+    }
+
+    @FXML
+    void openFileMenu(ActionEvent event) {
+
+    }
+
+    @FXML
+    void switchDarkMode(ActionEvent event) {
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
+        Scene scene = stage.getScene();
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(getClass().getResource("dark-style.css").toExternalForm());
+    }
+
+    @FXML
+    void switchLightMode(ActionEvent event) {
+        Stage stage = (Stage) anchorPane.getScene().getWindow();
+        Scene scene = stage.getScene();
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+    }
 
     @FXML
     protected void addNewRecord() {
@@ -85,6 +149,7 @@ public class DB_GUI_Controller implements Initializable {
 
     @FXML
     protected void editRecord() {
+        //Edit method displays ID, try using this to query database?
         Person p= tv.getSelectionModel().getSelectedItem();
         int c=data.indexOf(p);
         Person p2= new Person();
@@ -104,20 +169,13 @@ public class DB_GUI_Controller implements Initializable {
         data.remove(p);
     }
 
-
-
     @FXML
     protected void showImage() {
         File file= (new FileChooser()).showOpenDialog(img_view.getScene().getWindow());
         if(file!=null){
             img_view.setImage(new Image(file.toURI().toString()));
-
         }
     }
-
-
-
-
 
     @FXML
     protected void selectedItemTV(MouseEvent mouseEvent) {
@@ -126,7 +184,5 @@ public class DB_GUI_Controller implements Initializable {
         last_name.setText(p.getLastName());
         department.setText(p.getDept());
         major.setText(p.getMajor());
-
-
     }
 }
